@@ -1,12 +1,13 @@
 import { createBrowserRouter} from "react-router-dom";
+import MainLayouts from "../layouts/MainLayouts.jsx";
 import Home from "../pages/Home";
-import { MainLayouts } from "../layouts/MainLayouts";
-import NewsList from "../pages/NewsList";
-import NewsDetail from "../pages/NewsDetail";
 import Login from "../pages/Login";
+import Edit from "../pages/Edit";
+import Create from "../pages/Create";
+import PostDetail from "../pages/PostDetail";
+import PostByAuthor from "../pages/PostByAuthor";
 import Register from "../pages/Register";
-import AdminCreatePost from "../pages/AdminCreatePost";
-import AdminEditPost from "../pages/AdminEditPost";
+
 
  const router = createBrowserRouter([
 
@@ -19,14 +20,7 @@ import AdminEditPost from "../pages/AdminEditPost";
               path: '/',
               element: <Home />
             },
-            {
-              path: "news",
-              element: <NewsList />
-            },
-            {
-              path: "news/:id",
-              element: <NewsDetail />
-            },
+          
             {
               path: "login",
               element: <Login />
@@ -35,14 +29,24 @@ import AdminEditPost from "../pages/AdminEditPost";
               path: "register",
               element: <Register />
             },
-            {
-              path: "admin/create-post",
-              element: <AdminCreatePost />
-            },
-            {
-              path: "admin/edit-post/:id",
-              element: <AdminEditPost />
-            }
+
+           {
+            path: "posts/:id",
+            element: <PostDetail />
+           },
+           {  
+            path: "author/:id",
+            element: <PostByAuthor />
+           },
+           {
+            path: "create",
+            element: <Create />
+           },
+           {
+            path: "edit/:id",
+            element: <Edit />
+
+           }
 
 
         ]

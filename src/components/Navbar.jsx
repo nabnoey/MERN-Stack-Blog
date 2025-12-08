@@ -1,45 +1,55 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
 
+const Navbar = () => {
+  const menuItems = [
+    { link: "/", label: "Home" },
+  {link: "/create", label: "Create New Post" },
+    // { link: "/login", label: "Login" },
+    // { link: "/register", label: "Register" }
+  ]
 
-function Navbar() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    logout();
-    navigate('/')
-  }
   return (
-   <div className="navbar bg-base-100 shadow-sm">
-  <div className="flex-1">
-    <Link to="/" className="btn btn-ghost text-xl">SE NPRU Blog</Link>
-  </div>
-  <div className="flex-none">
-    <ul className="menu menu-horizontal px-1 gap-2 items-center">
-      {user?.role === 'admin' && (
-        <li>
-          <Link to="/admin/create-post" className="btn btn-primary btn-sm text-white">Create Post</Link>
-        </li>
-      )}
-      {!user ? (
-        <>
-          <li>
-            <Link to="/login" className="btn btn-outline btn-sm">Login</Link>
-          </li>
-          <li>
-            <Link to="/register" className="btn btn-ghost btn-sm">Register</Link>
-          </li>
-        </>
-      ) : (
-        <>
-          <li><span className="text-sm text-gray-600">สวัสดี, {user.username} ({user.role})</span></li>
-          <li><button className="btn btn-ghost btn-sm" onClick={handleLogout}>Logout</button></li>
-        </>
-      )}
-    </ul>
-  </div>
-</div>
+    <div className="navbar bg-base-100 shadow-sm">
+      <div className="navbar-start">
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </div>
+
+          <ul
+            tabIndex="-1"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+
+         
+
+            
+          </ul>
+        </div>
+
+        <a className="btn btn-ghost text-xl">daisyUI</a>
+      </div>
+
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1">
+          
+            {menuItems.map((item) => (
+              <li key={item.link}>
+                <a href={item.link}>{item.label}</a>
+              </li>
+            ))}
+        
+        </ul>
+      </div>
+
+      <div className="navbar-end gap-3">
+        <a className="btn">Login</a>
+         <a className="btn">register</a>
+      </div>
+
+      
+    </div>
   )
 }
 

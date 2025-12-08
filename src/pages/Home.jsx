@@ -1,44 +1,60 @@
-import React from "react";
-import NewsCardRightImage from "../components/NewsCardRightImage";
-import NewsCardLeftImage from "../components/NewsCardLeftImage";
-import { useNews } from "../context/NewsContext";
+import React from 'react'
+// import { postDetail } from '../data/postDetail'
+import  { useState } from 'react'
+import Post from '../components/Post.jsx'
 
-function Home() {
-  const { items } = useNews();
+const  Home =  () => {
+  const [posts,setPosts] = useState([
+{
+  id:1,
+  title: 'Sample Post',
+ cover:"https://i.pinimg.com/736x/6d/bc/8f/6dbc8fec5ee1cfb9819d10ed09e67829.jpg",
+ author:"John Doe",
+ createdAt:"2024-01-01",
+ sumary:"This is a sample summary of the post."
+},
+{
+  id:2,
+  title: 'Sample Post',
+ cover:"https://i.pinimg.com/736x/6d/bc/8f/6dbc8fec5ee1cfb9819d10ed09e67829.jpg",
+ author:"John Doe",
+ createdAt:"2024-01-01",
+ sumary:"This is a sample summary of the post."
+},
+{
+  id:3,
+  title: 'Sample Post',
+ cover:"https://i.pinimg.com/736x/6d/bc/8f/6dbc8fec5ee1cfb9819d10ed09e67829.jpg",
+ author:"John Doe",
+ createdAt:"2024-01-01",
+ sumary:"This is a sample summary of the post."
+},
+
+
+
+  ]) 
+
   return (
-    <div className="container mx-auto px-4 mt-20">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">ข่าวทั้งหมด</h1>
-      {items.slice(0, 4).map((news, idx) => (
-        idx % 2 === 0 ? (
-          <NewsCardLeftImage
-            key={news.id}
-            id={news.id}
-            title={news.title}
-            author={news.author}
-            date={news.date}
-            content={news.description || news.content}
-            image={news.image}
-          />
-        ) : (
-          <NewsCardRightImage
-            key={news.id}
-            id={news.id}
-            title={news.title}
-            author={news.author}
-            date={news.date}
-            content={news.description || news.content}
-            image={news.image}
-          />
-        )
+    <div>
+    {posts.map((post,index) => (
+        <Post 
+          key={post.id}
+          index={index}
+          id={post.id} 
+          title={post.title}
+          cover={post.cover}
+          author={post.author}
+          createdAt={post.createdAt}
+          sumary={post.sumary}
+            postDetail={post}
+           
+        />
       ))}
+      
+ 
+
     </div>
-  );
+  )
 }
 
-export default Home;
-
-
-
-
-
-
+export default Home
