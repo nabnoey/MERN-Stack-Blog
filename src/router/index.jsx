@@ -21,14 +21,7 @@ import Register from "../pages/Register";
               element: <Home />
             },
           
-            {
-              path: "login",
-              element: <Login />
-            },
-            {
-              path: "register",
-              element: <Register />
-            },
+          
 
            {
             path: "posts/:id",
@@ -50,8 +43,21 @@ import Register from "../pages/Register";
 
 
         ]
-    }
+
+        
+    },
+
+
+      {
+              path: "login",
+              element: <Login />
+            },
+            {
+              path: "register",
+              element: <Register />
+            },
 
 ])
+
 
 export default router

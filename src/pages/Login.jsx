@@ -1,78 +1,55 @@
-// import React, { useState } from "react";
-// import { useLocation, useNavigate } from "react-router-dom";
-// import { useAuth } from "../context/AuthContext";
-
-// function Login() {
-//   const navigate = useNavigate();
-//   const location = useLocation();
-//   const { login } = useAuth();
-//   const [username, setUsername] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [role, setRole] = useState("reader");
-//   const [error, setError] = useState("");
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     if (!username.trim() || !password.trim()) {
-//       setError("กรุณากรอกชื่อผู้ใช้และรหัสผ่าน");
-//       return;
-//     }
-//     login({ username: username.trim(), role });
-//     const redirectTo = location.state?.from || "/";
-//     navigate(redirectTo, { replace: true });
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gray-50 py-10 px-4">
-//       <div className="max-w-md mx-auto bg-white rounded-xl shadow p-6">
-//         <h1 className="text-2xl font-bold text-gray-900 mb-6">เข้าสู่ระบบ</h1>
-//         <form onSubmit={handleSubmit} className="space-y-4">
-//           <div>
-//             <label className="block text-sm font-medium text-gray-700 mb-1">ชื่อผู้ใช้</label>
-//             <input
-//               className="input input-bordered w-full"
-//               value={username}
-//               onChange={(e) => setUsername(e.target.value)}
-//               placeholder="username"
-//             />
-//           </div>
-//           <div>
-//             <label className="block text-sm font-medium text-gray-700 mb-1">รหัสผ่าน</label>
-//             <input
-//               type="password"
-//               className="input input-bordered w-full"
-//               value={password}
-//               onChange={(e) => setPassword(e.target.value)}
-//               placeholder="••••••••"
-//             />
-//           </div>
-//           <div>
-//             <label className="block text-sm font-medium text-gray-700 mb-1">สิทธิ์การใช้งาน</label>
-//             <select className="select select-bordered w-full" value={role} onChange={(e) => setRole(e.target.value)}>
-//               <option value="reader">ผู้ชม (อ่านข่าว)</option>
-//               <option value="admin">ผู้ดูแล (เพิ่มข่าวได้)</option>
-//             </select>
-            
-//           </div>
-//           {error ? <p className="text-error text-sm">{error}</p> : null}
-//           <div className="pt-2">
-//             <button type="submit" className="btn btn-primary w-full">เข้าสู่ระบบ</button>
-//           </div>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Login;
-
-
-import React from 'react'
+import React from "react";
 
 function Login() {
   return (
-    <div>Login</div>
-  )
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-500">
+      <div className="card w-full max-w-sm bg-base-100 shadow-xl">
+        <div className="card-body gap-4">
+          <h2 className="text-2xl font-bold text-center">Login</h2>
+
+          {/* Email */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input
+              type="email"
+              placeholder="email@example.com"
+              className="input input-bordered"
+            />
+          </div>
+
+          {/* Password */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="input input-bordered"
+            />
+          </div>
+
+
+<div className="form-control mt-5">
+  <div className="flex justify-end">
+    <button className="btn btn-primary">Login</button>
+  </div>
+</div>
+
+
+          {/* Register link */}
+          <p className="text-center text-sm opacity-70">
+            ยังไม่มีบัญชี?{" "}
+            <span className="link link-primary cursor-pointer">
+              สมัครสมาชิก
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default Login
+export default Login;

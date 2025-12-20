@@ -1,70 +1,76 @@
-// import React, { useState } from "react";
-// import { useLocation, useNavigate } from "react-router-dom";
-// import { useAuth } from "../context/AuthContext";
-
-// function Register() {
-//   const navigate = useNavigate();
-//   const location = useLocation();
-//   const { login } = useAuth();
-//   const [username, setUsername] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [error, setError] = useState("");
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     if (!username.trim() || !password.trim()) {
-//       setError("กรุณากรอกชื่อผู้ใช้และรหัสผ่าน");
-//       return;
-//     }
-//     // สมัครสมาชิกแบบจำลอง: ให้สิทธิ์เริ่มต้นเป็นผู้อ่าน
-//     login({ username: username.trim(), role: "reader" });
-//     const redirectTo = location.state?.from || "/";
-//     navigate(redirectTo, { replace: true });
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gray-50 py-10 px-4">
-//       <div className="max-w-md mx-auto bg-white rounded-xl shadow p-6">
-//         <h1 className="text-2xl font-bold text-gray-900 mb-6">สมัครสมาชิก</h1>
-//         <form onSubmit={handleSubmit} className="space-y-4">
-//           <div>
-//             <label className="block text-sm font-medium text-gray-700 mb-1">ชื่อผู้ใช้</label>
-//             <input
-//               className="input input-bordered w-full"
-//               value={username}
-//               onChange={(e) => setUsername(e.target.value)}
-//               placeholder="username"
-//             />
-//           </div>
-//           <div>
-//             <label className="block text-sm font-medium text-gray-700 mb-1">รหัสผ่าน</label>
-//             <input
-//               type="password"
-//               className="input input-bordered w-full"
-//               value={password}
-//               onChange={(e) => setPassword(e.target.value)}
-//               placeholder="••••••••"
-//             />
-//           </div>
-//           {error ? <p className="text-error text-sm">{error}</p> : null}
-//           <div className="pt-2">
-//             <button type="submit" className="btn btn-primary w-full">สมัครสมาชิก</button>
-//           </div>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Register;
-
-
-import React from 'react'
+import React from "react";
 
 function Register() {
   return (
-    <div>Register</div>
-  )
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-500">
+      <div className="card w-full max-w-sm bg-base-100 shadow-xl">
+        <div className="card-body gap-4">
+          <h2 className="text-2xl font-bold text-center">Register</h2>
+
+          {/* Username */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Username</span>
+            </label>
+            <input
+              type="text"
+              placeholder="your username"
+              className="input input-bordered"
+            />
+          </div>
+
+          {/* Email */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input
+              type="email"
+              placeholder="email@example.com"
+              className="input input-bordered"
+            />
+          </div>
+
+          {/* Password */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="input input-bordered"
+            />
+          </div>
+
+          {/* Confirm Password */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Confirm Password</span>
+            </label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="input input-bordered"
+            />
+          </div>
+
+          {/* Button */}
+          <div className="form-control mt-5 flex items-end">
+            <button className="btn btn-primary">Register</button>
+          </div>
+
+          {/* Login link */}
+          <p className="text-center text-sm opacity-70">
+            มีบัญชีอยู่แล้ว?{" "}
+            <span className="link link-primary cursor-pointer">
+              เข้าสู่ระบบ
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default Register
+export default Register;
