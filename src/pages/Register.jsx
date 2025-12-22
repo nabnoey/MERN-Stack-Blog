@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthenticationService from "../services/authentication.service";
 import Swal from "sweetalert2";
+import { UserContext } from "../context/UserContext";
 
 function Register() {
   const [user, setUser] = useState({
@@ -10,11 +11,17 @@ function Register() {
   });
 
   const navigate = useNavigate();
+  const { userInfo } = useContext(UserContext);
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [userInfo, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
+    setUser((user) => ({
+      ...user,
       [name]: value,
     }));
   };

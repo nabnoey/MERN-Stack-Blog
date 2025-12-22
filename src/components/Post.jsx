@@ -14,24 +14,18 @@ const Post = ({ postDetail, index = 0 }) => {
       >
         {/* Image */}
         <figure className="w-64 h-64 flex-shrink-0">
-          <img
-            src={cover}
-            alt={title}
-            className="w-full h-full object-cover"
-          />
+          <img src={cover} alt={title} className="w-full h-full object-cover" />
         </figure>
 
         {/* Content */}
         <div className="card-body gap-3">
           <h2 className="card-title">{title}</h2>
 
-          <p className="line-clamp-2 text-sm opacity-80">
-            {sumary}
-          </p>
+          <p className="line-clamp-2 text-sm opacity-80">{sumary}</p>
 
           <div className="card-actions justify-between items-center mt-2">
             <div className="badge badge-primary badge-outline">
-              {author} • {createdAt}
+              {author.username} • {createdAt}
             </div>
 
             <Link to={`/post/${id}`} className="btn btn-primary btn-sm">

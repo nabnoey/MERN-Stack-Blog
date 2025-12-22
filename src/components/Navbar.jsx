@@ -1,10 +1,13 @@
-import React from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext";
-import UserProfile from "./UserProfile";
+import { UserContext } from "../context/UserContext";
 
 const Navbar = () => {
-  const { user } = useAuthContext();
+  const { userInfo, logout } = useContext(UserContext);
+  const username = userInfo?.username;
+  // const logout = () => {
+  //   setUserInfo(null);
+  // };
 
   const menuItems = [
     { link: "/", label: "Home" },
@@ -12,56 +15,54 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-base-100 shadow-md px-4">
       {/* LEFT */}
       <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </div>
-        </div>
-
-        <Link to="/" className="btn btn-ghost text-xl">
-          daisyUI
+        <Link to="/" className="btn btn-ghost text-2xl font-bold text-primary">
+          📝 MyBlog
         </Link>
       </div>
 
       {/* CENTER */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal gap-2">
           {menuItems.map((item) => (
             <li key={item.link}>
-              <Link to={item.link}>{item.label}</Link>
+              <Link className="font-medium" to={item.link}>
+                {item.label}
+              </Link>
             </li>
           ))}
         </ul>
       </div>
 
-      {/* RIGHT */}
-      <div className="navbar-end gap-3">
-        {user ? (
-          <UserProfile />
+      <div className="navbar-end space-x-3">
+        {!username ? (
+          <>
+            <a
+              href="/register"
+              className="btn btn-outline btn-primary rounded-xl"
+            >
+              Register
+            </a>
+            <a href="/login" className="btn btn-outline btn-success rounded-xl">
+              Login
+            </a>
+          </>
         ) : (
           <>
-            <Link to="/login" className="btn">
-              Login
-            </Link>
-            <Link to="/register" className="btn">
-              Register
-            </Link>
+            <a
+              href="/create"
+              className="btn btn-outline btn-primary rounded-xl"
+            >
+              Create New Post
+            </a>
+            <button
+              onClick={logout}
+              className="btn btn-outline btn-error rounded-xl"
+            >
+              Logout ({username})
+            </button>
           </>
         )}
       </div>

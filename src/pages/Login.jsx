@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthenticationService from "../services/authentication.service";
 import Swal from "sweetalert2";
+import { UserContext } from "../context/UserContext.jsx";
 
-function Login() {
-  const navigate = useNavigate();
-
+const Login = () => {
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
 
+  const { logIn, userInfo } = useContext(UserContext);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [userInfo, navigate]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser((prev) => ({
-      ...prev,
+    setUser((user) => ({
+      ...user,
       [name]: value,
     }));
   };
@@ -37,9 +44,14 @@ function Login() {
 
       Swal.fire({
         title: "Success",
-        text: response.data.message || "เข้าสู่ระบบสำเร็จ",
+        text: "สมัครสำเร็จ",
         icon: "success",
       }).then(() => {
+        logIn({
+          id: response.data.id,
+          username: response.data.username,
+          accessToken: response.data.accessToken,
+        });
         navigate("/");
       });
     } catch (error) {
@@ -109,6 +121,6 @@ function Login() {
       </div>
     </div>
   );
-}
+};
 
 export default Login;
