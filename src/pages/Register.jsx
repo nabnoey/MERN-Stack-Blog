@@ -1,6 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthenticationService from "../services/authentication.service";
+import Swal from "sweetalert2";
 
 function Register() {
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    if (!user.username || !user.password) {
+      Swal.fire({
+        title: "Error",
+        text: "กรุณากรอก username และ password ให้ครบ",
+        icon: "error",
+      });
+      return;
+    }
+
+    try {
+      const response = await AuthenticationService.register(
+        user.username,
+        user.password
+      );
+
+      Swal.fire({
+        title: "Success",
+        text: response?.data?.message,
+        icon: "success",
+      }).then(() => {
+        navigate("/login");
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "สมัครสมาชิกไม่สำเร็จ",
+        text: error.response?.data?.message,
+        icon: "error",
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-500">
       <div className="card w-full max-w-sm bg-base-100 shadow-xl">
@@ -14,20 +64,11 @@ function Register() {
             </label>
             <input
               type="text"
+              name="username"
               placeholder="your username"
               className="input input-bordered"
-            />
-          </div>
-
-          {/* Email */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Email</span>
-            </label>
-            <input
-              type="email"
-              placeholder="email@example.com"
-              className="input input-bordered"
+              value={user.username}
+              onChange={handleChange}
             />
           </div>
 
@@ -38,35 +79,20 @@ function Register() {
             </label>
             <input
               type="password"
+              name="password"
               placeholder="••••••••"
               className="input input-bordered"
+              value={user.password}
+              onChange={handleChange}
             />
           </div>
 
-          {/* Confirm Password */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Confirm Password</span>
-            </label>
-            <input
-              type="password"
-              placeholder="••••••••"
-              className="input input-bordered"
-            />
-          </div>
-
-          {/* Button */}
-          <div className="form-control mt-5 flex items-end">
-            <button className="btn btn-primary">Register</button>
-          </div>
-
-          {/* Login link */}
-          <p className="text-center text-sm opacity-70">
-            มีบัญชีอยู่แล้ว?{" "}
-            <span className="link link-primary cursor-pointer">
-              เข้าสู่ระบบ
-            </span>
-          </p>
+          <button
+            className="btn btn-primary w-full mt-4"
+            onClick={handleSubmit}
+          >
+            Register
+          </button>
         </div>
       </div>
     </div>
