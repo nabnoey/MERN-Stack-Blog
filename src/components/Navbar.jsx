@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 const Navbar = () => {
-  const { userInfo, logout } = useContext(UserContext);
+  const { userInfo, logOut } = useContext(UserContext);
   const username = userInfo?.username;
   // const logout = () => {
   //   setUserInfo(null);
@@ -36,38 +36,28 @@ const Navbar = () => {
         </ul>
       </div>
 
-      <div className="navbar-end space-x-3">
-        {!username ? (
-          <>
-            <a
-              href="/register"
-              className="btn btn-outline btn-primary rounded-xl"
-            >
-              Register
-            </a>
-            <a href="/login" className="btn btn-outline btn-success rounded-xl">
-              Login
-            </a>
-          </>
-        ) : (
-          <>
-            <a
-              href="/create"
-              className="btn btn-outline btn-primary rounded-xl"
-            >
-              Create New Post
-            </a>
-            <button
-              onClick={logout}
-              className="btn btn-outline btn-error rounded-xl"
-            >
-              Logout ({username})
-            </button>
-          </>
-        )}
-      </div>
+       {username ? (
+        <div className="navbar-end space-x-2">
+          <a className="btn" href="login">
+            Create a new post
+          </a>
+          <button className="btn" href="register" onClick={logOut}>
+            Logout ({username})
+          </button>
+        </div>
+      ) : (
+        <div className="navbar-end space-x-2">
+          <a className="btn" href="login">
+            Login
+          </a>
+          <a className="btn" href="register">
+            Register
+          </a>
+        </div>
+      )}
     </div>
   );
 };
+
 
 export default Navbar;
