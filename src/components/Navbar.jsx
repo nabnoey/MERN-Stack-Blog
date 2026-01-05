@@ -9,10 +9,7 @@ const Navbar = () => {
   //   setUserInfo(null);
   // };
 
-  const menuItems = [
-    { link: "/", label: "Home" },
-    { link: "/create", label: "Create New Post" },
-  ];
+  const menuItems = [];
 
   return (
     <div className="navbar bg-base-100 shadow-md px-4">
@@ -36,9 +33,9 @@ const Navbar = () => {
         </ul>
       </div>
 
-       {username ? (
+      {username ? (
         <div className="navbar-end space-x-2">
-          <a className="btn" href="login">
+          <a className="btn" href="/create">
             Create a new post
           </a>
           <button className="btn" href="register" onClick={logOut}>
@@ -58,6 +55,5 @@ const Navbar = () => {
     </div>
   );
 };
-
 
 export default Navbar;

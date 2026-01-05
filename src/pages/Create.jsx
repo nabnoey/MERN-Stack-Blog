@@ -1,44 +1,62 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ReactQuill from "react-quill";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
+import PostService from "../services/post.service";
 
 const Create = () => {
-  const [title, setTitle] = useState("");
-  const [sumary, setSumary] = useState("");
-  const [content, setContent] = useState("");
+  const [postDetail, setPostDetail] = useState({
+    title: "",
+    summary: "",
+    content: "",
+    file: null,
+  });
+
   const navigate = useNavigate();
+  const editorRef = useRef(null);
 
-  const handleCreatePost = async () => {
-    if (!title || !sumary || !content) {
-      Swal.fire({
-        icon: "warning",
-        title: "กรุณากรอกข้อมูลให้ครบ",
-      });
-      return;
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+
+    if (name === "file") {
+      setPostDetail({ ...postDetail, file: files[0] });
+    } else {
+      setPostDetail({ ...postDetail, [name]: value });
     }
+  };
 
-    const newPost = {
-      title,
-      sumary,
-      content,
-      author: "Guest", // ยังไม่ต้องมีระบบ user
-      date: new Date().toISOString(),
-    };
+  const handleContentChange = (value) => {
+    setPostDetail({ ...postDetail, content: value });
+  };
 
-    await fetch("http://localhost:3000/news", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newPost),
-    });
+  const handleSubmit = async () => {
+    try {
+      const data = new FormData();
+      data.append("title", postDetail.title);
+      data.append("summary", postDetail.summary);
+      data.append("content", postDetail.content);
+      data.append("file", postDetail.file);
 
-    Swal.fire({
-      icon: "success",
-      title: "โพสต์ถูกบันทึกแล้ว!",
-      showConfirmButton: false,
-      timer: 1500,
-    }).then(() => navigate("/"));
+      const response = await PostService.createPost(data);
+
+      if (response.status === 200) {
+        Swal.fire({
+          title: "Create Post",
+          text: "Create post successfully",
+          icon: "success",
+        }).then(() => {
+          navigate("/");
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Create Post Failed",
+        icon: "error",
+        text: error.message || "Request failed",
+      });
+      console.error(error);
+    }
   };
 
   return (
@@ -49,26 +67,29 @@ const Create = () => {
 
           <input
             type="text"
+            name="title"
             className="input input-bordered mt-4"
             placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={postDetail.title}
+            onChange={handleChange}
           />
 
           <input
             type="text"
+            name="summary"
             className="input input-bordered mt-4"
             placeholder="Summary"
-            value={sumary}
-            onChange={(e) => setSumary(e.target.value)}
+            value={postDetail.summary}
+            onChange={handleChange}
           />
 
           <p className="mt-4 font-semibold">Content</p>
 
           <ReactQuill
+            ref={editorRef}
             theme="snow"
-            value={content}
-            onChange={setContent}
+            value={postDetail.content}
+            onChange={handleContentChange}
             modules={{
               toolbar: [
                 [{ header: [1, 2, false] }],
@@ -78,24 +99,19 @@ const Create = () => {
                 ["clean"],
               ],
             }}
-            formats={[
-              "header",
-              "bold",
-              "italic",
-              "underline",
-              "list",
-              "bullet",
-              "link",
-              "image",
-            ]}
             style={{ height: "300px", marginBottom: "2rem" }}
           />
 
-          <input type="file" className="file-input file-input-bordered mt-4" />
+          <input
+            type="file"
+            name="file"
+            className="file-input file-input-bordered mt-4"
+            onChange={handleChange}
+          />
 
           <button
-            onClick={handleCreatePost}
             className="btn btn-primary w-full mt-6"
+            onClick={handleSubmit}
           >
             Create Post
           </button>

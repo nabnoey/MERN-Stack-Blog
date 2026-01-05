@@ -1,11 +1,16 @@
 import api from "./api";
 const API_URL = import.meta.env.VITE_POSTS_URL;
 
-const createPost = async () => {
-  return await api.post(API_URL);
+const createPost = async (post) => {
+  return (
+    await api.post(API_URL, post),
+    {
+      "Content-Type": "multipart/from-data",
+    }
+  );
 };
-const getAllPosts = async (post) => {
-  return await api.get(API_URL, post);
+const getAllPost = async () => {
+  return await api.get(API_URL);
 };
 
 const getById = async (id) => {
@@ -23,7 +28,7 @@ const getByAuthorId = async (id) => {
 
 const PostService = {
   createPost,
-  getAllPosts,
+  getAllPost,
   getById,
   updatePost,
   deletePost,

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Post = ({ postDetail, index = 0 }) => {
-  const { id, title, cover, author, createdAt, sumary } = postDetail;
+  const { _id, title, cover, author, createdAt, summary } = postDetail;
   const isEven = index % 2 === 0;
 
   return (
@@ -21,14 +21,14 @@ const Post = ({ postDetail, index = 0 }) => {
         <div className="card-body gap-3">
           <h2 className="card-title">{title}</h2>
 
-          <p className="line-clamp-2 text-sm opacity-80">{sumary}</p>
+          <p className="line-clamp-2 text-sm opacity-80">{summary}</p>
 
           <div className="card-actions justify-between items-center mt-2">
             <div className="badge badge-primary badge-outline">
-              {author.username} • {createdAt}
+              {author?.username} • {createdAt}
             </div>
 
-            <Link to={`/post/${id}`} className="btn btn-primary btn-sm">
+            <Link to={`/post/${_id}`} className="btn btn-primary btn-sm">
               อ่านต่อ
             </Link>
           </div>

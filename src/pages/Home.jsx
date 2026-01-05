@@ -3,14 +3,15 @@ import { useState, useEffect } from "react";
 import postService from "../services/post.service.js";
 import Post from "../components/Post.jsx";
 import Swal from "sweetalert2";
+// import db from "../db.json";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const getAllPosts = async () => {
+    const getAllPost = async () => {
       try {
-        const response = await postService.getAllPosts();
+        const response = await postService.getAllPost();
         if (response.status === 200) {
           setPosts(response.data);
         }
@@ -22,12 +23,12 @@ const Home = () => {
         });
       }
     };
-    getAllPosts();
+    getAllPost();
   }, []);
 
   return (
     <div className="space-y-4">
-      {postService.length > 0 &&
+      {posts.length > 0 &&
         posts.map((post, index) => (
           <Post key={index} postDetail={{ ...post }} />
         ))}
