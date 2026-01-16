@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import PostService from "../services/post.service";
 import { UserContext } from "../context/UserContext";
 
+
 const PostDetail = () => {
   const { id } = useParams();
   const { userInfo } = useContext(UserContext);
@@ -17,6 +18,7 @@ const PostDetail = () => {
     author: {},
     content: "",
   });
+ 
 
   //ถ้าไอดีเปลี่ยนให้เปลี่ยนตาม
   useEffect(() => {
@@ -38,7 +40,7 @@ const PostDetail = () => {
     fetchPost();
   }, [id]);
 
-  const handleDelete = async (postId) => {
+  const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "ต้องการลบโพสต์นี้หรือไม่?",
       icon: "warning",
@@ -51,14 +53,14 @@ const PostDetail = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await PostService.deletePost(postId);
+        const response = await PostService.deletePost(id);
         if (response.status === 200) {
           await Swal.fire({
             title: "ลบสำเร็จ",
             icon: "success",
             text: "ลบโพสต์เรียบร้อยแล้ว",
           });
-          window.location.href = "/";
+       
         }
       } catch (error) {
         Swal.fire({
