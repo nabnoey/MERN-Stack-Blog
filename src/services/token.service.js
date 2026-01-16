@@ -20,6 +20,7 @@ const setUser = (user) => {
     cookies.set(
       "user",
       JSON.stringify({
+        _id: user?._id || user?.id,
         id: user?.id,
         username: user?.username,
         accessToken: user?.accessToken,

@@ -41,23 +41,45 @@ const Edit = forwardRef(({ value, onChange }, ref) => {
   });
 
   useEffect(() => {
-    const updatePosts = async (id) => {
+    const fetchPost = async (id) => {
       try {
         const response = await PostService.getById(id);
         if (response.status === 200) {
-          setPost(response.data.data);
+          setPost(response.data);
         }
       } catch (error) {
         Swal.fire({
-          title: "Get All Posts",
+          title: "ดึงข้อมูลโพสต์ล้มเหลว",
           icon: "error",
           text: error?.response?.data?.message || error.message,
         });
       }
     };
-    updatePosts(id);
+    fetchPost(id);
   }, [id]);
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPost({
+      ...post,
+      [name]: value,
+    });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPost({
+          ...post,
+          cover: reader.result,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -87,25 +109,40 @@ const Edit = forwardRef(({ value, onChange }, ref) => {
           Update Book
         </h1>
 
-        <form onSubmit={handleChange} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
             placeholder="Title"
+            name="title"
             value={post?.title}
             onChange={handleChange}
             className="input input-bordered w-full"
           />
 
-          <input
-            type="text"
-            placeholder="Cover URL"
-            value={post?.cover}
-            onChange={handleChange}
-            className="input input-bordered w-full"
-          />
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">เลือกรูปปกหนังสือ</span>
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="file-input file-input-bordered w-full"
+            />
+            {post?.cover && (
+              <div className="mt-3">
+                <img
+                  src={post.cover}
+                  alt="Preview"
+                  className="max-h-64 rounded-lg"
+                />
+              </div>
+            )}
+          </div>
 
           <textarea
             placeholder="Content"
+            name="content"
             value={post?.content}
             onChange={handleChange}
             className="textarea textarea-bordered w-full"

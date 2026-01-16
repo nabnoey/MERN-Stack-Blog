@@ -38,6 +38,38 @@ const PostDetail = () => {
     fetchPost();
   }, [id]);
 
+  const handleDelete = async (postId) => {
+    const result = await Swal.fire({
+      title: "ต้องการลบโพสต์นี้หรือไม่?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "ลบ",
+      cancelButtonText: "ยกเลิก",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await PostService.deletePost(postId);
+        if (response.status === 200) {
+          await Swal.fire({
+            title: "ลบสำเร็จ",
+            icon: "success",
+            text: "ลบโพสต์เรียบร้อยแล้ว",
+          });
+          window.location.href = "/";
+        }
+      } catch (error) {
+        Swal.fire({
+          title: "ลบล้มเหลว",
+          icon: "error",
+          text: error?.response?.data?.message || error.message,
+        });
+      }
+    }
+  };
+
   return (
     <div className="card lg:card-side bg-base-100 shadow-sm">
       <figure>
@@ -60,11 +92,13 @@ const PostDetail = () => {
           }}
         ></div>
         {userInfo?._id === post?.author?._id && (
-          <div className="">
+          <div className="flex gap-2">
             <a className="btn btn-warning" href={`/edit/${id}`}>
               Edit
             </a>
-            <a className="btn btn-error">Delete</a>
+            <button className="btn btn-error" onClick={() => handleDelete(id)}>
+              Delete
+            </button>
           </div>
         )}
       </div>

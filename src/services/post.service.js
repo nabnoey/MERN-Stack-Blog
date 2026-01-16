@@ -19,8 +19,8 @@ const getById = async (id) => {
 const updatePost = async (id, post) => {
   return await api.put(`${API_URL}/${id}`, post);
 };
-const deletePost = async () => {
-  return await api.delete(API_URL);
+const deletePost = async (id) => {
+  return await api.delete(`${API_URL}/${id}`);
 };
 const getByAuthorId = async (id) => {
   return await api.get(`${API_URL}/author/${id}`);
