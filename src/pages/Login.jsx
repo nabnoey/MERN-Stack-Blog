@@ -67,11 +67,11 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-500">
       <div className="card w-full max-w-sm bg-base-100 shadow-xl">
         <div className="card-body gap-4">
-          <h2 className="text-2xl font-bold text-center">Login</h2>
+          <h2 className="text-2xl font-bold text-center  text-white">Login</h2>
 
           {/* Username */}
           <div className="form-control">
-            <label className="label">
+            <label className="label  text-white">
               <span className="label-text">Username</span>
             </label>
             <input
@@ -86,7 +86,7 @@ const Login = () => {
 
           {/* Password */}
           <div className="form-control">
-            <label className="label">
+            <label className="label  text-white">
               <span className="label-text">Password</span>
             </label>
             <input
@@ -108,7 +108,7 @@ const Login = () => {
           </div>
 
           {/* Register link */}
-          <p className="text-center text-sm opacity-70">
+          <p className="text-center text-sm opacity-70  text-white">
             ยังไม่มีบัญชี?{" "}
             <span
               className="link link-primary cursor-pointer"

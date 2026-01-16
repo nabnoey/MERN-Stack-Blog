@@ -4,11 +4,11 @@ import NavBar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 const MainLayouts = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-r from-blue-500 to-purple-600">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-slate-50 via-blue-50 to-slate-100">
       <nav>
         <NavBar />
       </nav>
-      <main className="grow flex items-center justify-center container min-h-screen mx-auto pt-5 mt-5 sm:p-6 lg:p-8">
+      <main className="grow w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Outlet />
       </main>
       <footer>

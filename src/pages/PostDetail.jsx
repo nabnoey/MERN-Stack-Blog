@@ -71,36 +71,50 @@ const PostDetail = () => {
   };
 
   return (
-    <div className="card lg:card-side bg-base-100 shadow-sm">
-      <figure>
-        <img src={post.cover} alt={post.title} />
-      </figure>
+    <div className="w-full max-w-4xl mx-auto">
+      <div className="card bg-white shadow-lg border border-blue-100 overflow-hidden">
+        {/* Cover Image */}
+        <figure className="relative w-full h-96 bg-gradient-to-br from-blue-100 to-purple-100">
+          <img src={post.cover} alt={post.title} className="w-full h-full object-cover" />
+        </figure>
 
-      <div className="card-body">
-        <h2 className="card-title">{post.title}</h2>
-        <p>{post?.createAt}</p>
-        {/* <p>{post?.author?.username}</p>
-        By: {post.author} */}
-        <span className="">
-          @{post?.author?.username}
-          <a href={`/author/${post?.author?._id}`}>{post?.author?.username}</a>
-        </span>
-        <div
-          className="content text-grey-700"
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(post.content),
-          }}
-        ></div>
-        {userInfo?._id === post?.author?._id && (
-          <div className="flex gap-2">
-            <a className="btn btn-warning" href={`/edit/${id}`}>
-              Edit
-            </a>
-            <button className="btn btn-error" onClick={() => handleDelete(id)}>
-              Delete
-            </button>
+        <div className="card-body p-8 space-y-6">
+          {/* Title */}
+          <div className="border-b-2 border-slate-100 pb-4">
+            <h2 className="card-title text-4xl font-bold text-slate-800 mb-2">{post.title}</h2>
+            <div className="flex flex-col gap-2">
+              <span className="text-sm text-slate-600">
+                📅 {post?.createAt}
+              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold text-blue-600">By</span>
+                <a href={`/author/${post?.author?._id}`} className="badge badge-primary badge-outline font-semibold hover:shadow-md transition-all">
+                  @{post?.author?.username}
+                </a>
+              </div>
+            </div>
           </div>
-        )}
+          
+          {/* Content */}
+          <div
+            className="prose prose-sm md:prose-base max-w-none text-slate-700 leading-relaxed"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(post.content),
+            }}
+          ></div>
+          
+          {/* Action Buttons */}
+          {userInfo?._id === post?.author?._id || userInfo?.id === post?.author?._id ? (
+            <div className="flex gap-3 pt-6 border-t-2 border-slate-100">
+              <a className="btn btn-warning btn-outline gap-2 font-semibold" href={`/edit/${id}`}>
+                ✏️ แก้ไข
+              </a>
+              <button className="btn btn-error btn-outline gap-2 font-semibold" onClick={() => handleDelete(post._id)}>
+                🗑️ ลบ
+              </button>
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   );

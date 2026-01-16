@@ -27,7 +27,7 @@ const setUser = (user) => {
       }),
       {
         path: "/",
-        expires: new Date(Date.now() + 86400), // 1 day 24*60*60*1000 ms
+        expires: new Date(Date.now() + 86400000), // 1 day 24*60*60*1000 ms
       }
     );
   } else {

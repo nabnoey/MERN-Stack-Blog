@@ -103,55 +103,65 @@ const Edit = forwardRef(({ value, onChange }, ref) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-50 to-yellow-50 py-10">
-      <div className="w-full max-w-2xl text-purple-800 bg-white rounded-2xl shadow-xl p-8 ring-2 ring-purple-300">
-        <h1 className="text-3xl font-bold text-center text-purple-700 mb-6 drop-shadow-sm">
-          Update Book
-        </h1>
+    <div className="w-full max-w-4xl mx-auto py-8">
+      <div className="card bg-white shadow-lg border border-blue-100 overflow-hidden">
+        <div className="bg-gradient-to-r from-purple-600 to-blue-600 px-8 py-6">
+          <h1 className="text-3xl font-bold text-white">✏️ แก้ไขโพสต์</h1>
+          <p className="text-purple-100 text-sm mt-1">อัปเดตเนื้อหาของคุณ</p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Title"
-            name="title"
-            value={post?.title}
-            onChange={handleChange}
-            className="input input-bordered w-full"
-          />
+        {/* Cover Image */}
+        {post?.cover && (
+          <figure className="w-full h-72 bg-gradient-to-br from-blue-100 to-purple-100 overflow-hidden">
+            <img src={post.cover} alt="Preview" className="w-full h-full object-cover" />
+          </figure>
+        )}
+
+        <form onSubmit={handleSubmit} className="card-body p-8 space-y-6">
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold text-slate-700">หัวข้อ (Title)</span>
+            </label>
+            <input
+              type="text"
+              placeholder="พิมพ์หัวข้อโพสต์..."
+              name="title"
+              value={post?.title}
+              onChange={handleChange}
+              className="input input-bordered border-slate-300 text-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all font-semibold"
+            />
+          </div>
 
           <div className="form-control">
             <label className="label">
-              <span className="label-text">เลือกรูปปกหนังสือ</span>
+              <span className="label-text font-semibold text-slate-700">รูปปก (Cover Image)</span>
             </label>
             <input
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="file-input file-input-bordered w-full"
+              className="file-input file-input-bordered border-slate-300 bg-white file-input-primary focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
             />
-            {post?.cover && (
-              <div className="mt-3">
-                <img
-                  src={post.cover}
-                  alt="Preview"
-                  className="max-h-64 rounded-lg"
-                />
-              </div>
-            )}
           </div>
 
-          <textarea
-            placeholder="Content"
-            name="content"
-            value={post?.content}
-            onChange={handleChange}
-            className="textarea textarea-bordered w-full"
-            rows={6}
-          />
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold text-slate-700">เนื้อหา (Content)</span>
+            </label>
+            <textarea
+              placeholder="เนื้อหาโพสต์..."
+              name="content"
+              value={post?.content}
+              onChange={handleChange}
+              className="textarea textarea-bordered border-slate-300 h-64 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all resize-none"
+            />
+          </div>
 
-          <button type="submit" className="btn btn-primary w-full">
-            Update Post
-          </button>
+          <div className="flex gap-3 pt-4 border-t border-slate-100">
+            <button type="submit" className="btn btn-success flex-1 font-semibold text-white hover:shadow-lg transition-all">
+              💾 บันทึกการเปลี่ยนแปลง
+            </button>
+          </div>
         </form>
       </div>
     </div>

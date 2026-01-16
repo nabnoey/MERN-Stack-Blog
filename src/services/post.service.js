@@ -2,12 +2,7 @@ import api from "./api";
 const API_URL = import.meta.env.VITE_POSTS_URL;
 
 const createPost = async (post) => {
-  return (
-    await api.post(API_URL, post),
-    {
-      "Content-Type": "multipart/from-data",
-    }
-  );
+  return await api.post(API_URL, post);
 };
 const getAllPost = async () => {
   return await api.get(API_URL);
